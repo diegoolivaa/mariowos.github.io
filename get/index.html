@@ -228,68 +228,77 @@
             justify-content: center;
         }
 
-        @keyframes borderSpin {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
         .btn {
-            padding: 0.7rem 2.2rem;
-            border-radius: 12px;
-            background-color: #000000;
+            --glow: rgba(255, 255, 255, 0.5);
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             position: relative;
-            display: inline-block;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             text-align: center;
+            transition: transform 0.4s var(--ease), background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
-        .btn-gradient-1 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-2 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #7834D8 0%, #99004F 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-3 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-4 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #00FFFF 0%, #0059FF 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
+        /* Soft colored halo instead of a hard outline */
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--glow);
+            filter: blur(22px);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            animation: borderSpin 4s linear infinite;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-gradient-1:hover { box-shadow: 0 10px 30px rgba(62, 202, 227, 0.25); }
-        .btn-gradient-2:hover { box-shadow: 0 10px 30px rgba(120, 52, 216, 0.3); }
-        .btn-gradient-3:hover { box-shadow: 0 10px 30px rgba(141, 255, 171, 0.2); }
-        .btn-gradient-4:hover { box-shadow: 0 10px 30px rgba(0, 89, 255, 0.3); }
+        .btn:hover::before { opacity: 0.35; }
 
-        /* Primary download button gets a bit more presence */
+        .btn-arrow {
+            display: inline-block;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* Primary action: solid, high-contrast */
         .btn-primary {
-            padding: 0.9rem 2.8rem;
-            font-size: 1.1rem;
-            box-shadow: 0 0 40px rgba(62, 202, 227, 0.12);
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
+
+        .btn-primary:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover::before { opacity: 0.55; }
+
+        .btn-primary { padding: 0.9rem 2.6rem; font-size: 1.1rem; }
+
+        /* Each button keeps its section's accent as a hover halo */
+        .btn-gradient-1 { --glow: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%); }
+        .btn-gradient-2 { --glow: linear-gradient(90deg, #7834D8 0%, #99004F 100%); }
+        .btn-gradient-3 { --glow: linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%); }
+        .btn-gradient-4 { --glow: linear-gradient(90deg, #00FFFF 0%, #0059FF 100%); }
 
         /* Footer */
         footer {
@@ -417,7 +426,7 @@
         <div class="download-section">
             <h2>Want to cook <span class="text-gradient-cook">yourself?</span></h2>
             <div class="btn-group">
-                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us &gt;</a>
+                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us <span class="btn-arrow">&rarr;</span></a>
                 <a href="https://github.com/mariowOS/development" class="btn btn-gradient-4">Fork our repo</a>
             </div>
         </div>

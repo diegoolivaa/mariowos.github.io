@@ -456,46 +456,72 @@
             margin-top: 2rem;
         }
 
-        @keyframes borderSpin {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
         .btn {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            background-color: #000000;
+            --glow: rgba(255, 255, 255, 0.5);
+            padding: 0.95rem 2.1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             position: relative;
-            display: inline-block;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-align: center;
+            transition: transform 0.4s var(--ease), background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
-        .btn-get {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #0084FF 0%, #FFA98E 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-work {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #FF4400 0%, #0059FF 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
+        /* Soft colored halo instead of a hard outline */
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--glow);
+            filter: blur(22px);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            animation: borderSpin 4s linear infinite;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-get:hover { box-shadow: 0 10px 30px rgba(0, 132, 255, 0.25); }
-        .btn-work:hover { box-shadow: 0 10px 30px rgba(255, 68, 0, 0.25); }
+        .btn:hover::before { opacity: 0.35; }
+
+        .btn-arrow {
+            display: inline-block;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* Primary action: solid, high-contrast */
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover::before { opacity: 0.55; }
+
+        .btn-get { --glow: linear-gradient(90deg, #FFF600 0%, #D8A234 74%, #8C0099 100%); }
+        .btn-work { --glow: linear-gradient(90deg, #FF4400 0%, #0059FF 100%); }
 
         footer {
             width: 100%;
@@ -566,7 +592,6 @@
 
             .btn {
                 width: 100%;
-                text-align: center;
                 padding: 0.8rem 1.5rem;
             }
 
@@ -713,8 +738,8 @@
                 <div class="fade-element" style="text-align: center;">
                     <h1 style="font-size: 2.5rem;">Ready to make the <span class="text-gradient-switch">switch?</span></h1>
                     <div class="btn-group" style="justify-content: center;">
-                        <a href="get/index.html" class="btn btn-get">Get mariowOS ></a>
-                        <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-work">Work with us ></a>
+                        <a href="get/index.html" class="btn btn-primary btn-get">Get mariowOS <span class="btn-arrow">&rarr;</span></a>
+                        <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-work">Work with us <span class="btn-arrow">&rarr;</span></a>
                     </div>
                 </div>
             </div>
