@@ -4,79 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>security update 10-09-2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --text-color: #FFFF;
-            --bg-color: #1c1b1b;
-            --link-color: #0366d6;
-            --border-color: #eaecef;
-            --code-bg: #080808;
+            --bg: #000000;
+            --text-main: #ffffff;
+            --text-sub: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.04);
+            --code-bg: rgba(255, 255, 255, 0.06);
         }
+        * { box-sizing: border-box; }
+        html { -webkit-font-smoothing: antialiased; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-sub);
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(50% 40% at 10% 0%, rgba(203, 36, 49, 0.10), transparent 70%),
+                radial-gradient(40% 40% at 100% 30%, rgba(191, 0, 255, 0.07), transparent 70%);
+            background-attachment: fixed;
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 2rem 4rem 2rem;
         }
+        ::selection { background: rgba(203, 36, 49, 0.4); color: #fff; }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0 1rem 0;
+        }
+        .top-nav img { height: 20px; display: block; }
+        .top-nav a.back {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .top-nav a.back:hover { color: var(--text-main); border-color: rgba(255, 255, 255, 0.25); }
         h1, h2, h3, h4, h5 {
-            margin-top: 1.5em;
+            color: var(--text-main);
+            margin-top: 1.6em;
             margin-bottom: 0.5em;
             font-weight: 600;
+            line-height: 1.3;
         }
         h2 {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.3em;
+            font-size: 1.7rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5em;
         }
+        h4 { font-size: 1.05rem; }
+        strong { color: var(--text-main); font-weight: 600; }
+        a { color: #7cb7ff; }
         code {
             font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            color: #e4e4e7;
             background-color: var(--code-bg);
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
+            border: 1px solid var(--border);
+            padding: 0.1em 0.4em;
+            border-radius: 6px;
             font-size: 85%;
         }
         table {
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             width: 100%;
             margin-bottom: 1.5em;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--glass);
         }
         th, td {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
             text-align: left;
         }
+        tr:last-child td { border-bottom: none; }
         th {
-            background-color: var(--code-bg);
+            color: var(--text-main);
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.05);
         }
         hr {
             height: 1px;
-            background-color: var(--border-color);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             border: none;
-            margin: 2em 0;
+            margin: 2.5em 0;
         }
         .severity-badge {
             display: inline-block;
-            padding: 2px 6px;
-            border-radius: 3px;
+            padding: 2px 8px;
+            border-radius: 999px;
             font-size: 0.85em;
-            font-weight: bold;
+            font-weight: 600;
             margin-right: 8px;
         }
-        .critical { color: #cb2431; }
-        .high { color: #e36209; }
-        .medium { color: #b08800; }
-        .low { color: #0366d6; }
-        ul, ol {
-            padding-left: 2em;
+        .critical, .critical strong { color: #ff4d5e; }
+        .high, .high strong { color: #ff8a3d; }
+        .medium, .medium strong { color: #f5c542; }
+        .low, .low strong { color: #4da3ff; }
+        ul, ol { padding-left: 1.6em; }
+        li { margin-bottom: 0.35em; }
+        li::marker { color: rgba(255, 255, 255, 0.35); }
+        .bulletin {
+            display: block;
+            margin-top: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border-radius: 14px;
+            background: linear-gradient(90deg, rgba(203, 36, 49, 0.12) 0%, var(--glass) 50%);
+            border: 1px solid rgba(255, 77, 94, 0.25);
+            text-decoration: none;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
         }
-        li {
-            margin-bottom: 0.25em;
+        .bulletin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(203, 36, 49, 0.2);
+        }
+        .bulletin h3 { margin: 0 0 0.2rem 0; }
+        .bulletin p { margin: 0; color: var(--text-sub); }
+        @media (max-width: 600px) {
+            body { padding: 0 1rem 3rem 1rem; }
+            h2 { font-size: 1.35rem; }
+            table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
 <body>
+    <header class="top-nav">
+        <a href="https://mariowos.github.io/"><img src="../../images/mariowos-icon.png" alt="mariowOS"></a>
+        <a class="back" href="../index.html">&larr; All bulletins</a>
+    </header>
 
     <h2>🍯 mariowOS Honeypot (1.2.0)</h2>
     <p>The mariowOS kernel was <strong>lacking authentication across almost its entire API surface</strong> and was listening <strong>on all network interfaces</strong>. This combination meant that a device on the same local network can control system functions on the user's PC without credentials. Multiple endpoints allow command execution; the existing access controls can be bypassed.</p>

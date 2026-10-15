@@ -15,6 +15,43 @@
             --bg: #000000;
             --text-main: #ffffff;
             --text-sub: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.04);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { -webkit-font-smoothing: antialiased; }
+
+        ::selection { background: rgba(62, 202, 227, 0.35); color: #fff; }
+
+        a:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        /* Soft aurora glow behind the stars */
+        .aurora {
+            position: fixed;
+            inset: -20%;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(40% 35% at 20% 25%, rgba(62, 202, 227, 0.09), transparent 70%),
+                radial-gradient(35% 40% at 80% 70%, rgba(120, 52, 216, 0.11), transparent 70%),
+                radial-gradient(30% 30% at 50% 100%, rgba(141, 255, 171, 0.05), transparent 70%);
+            filter: blur(40px);
+            animation: auroraDrift 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraDrift {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-4%, 3%, 0) scale(1.08); }
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         * {
@@ -58,16 +95,25 @@
             display: flex;
             gap: 1.5rem;
             align-items: center;
+            padding: 0.6rem 1.1rem;
+            border-radius: 999px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
+
+        .nav-links a { display: flex; }
 
         .nav-links img {
             height: 22px;
             opacity: 0.6;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s var(--ease);
         }
 
         .nav-links img:hover {
             opacity: 1;
+            transform: translateY(-1px);
         }
 
         /* Interactive Star Canvas */
@@ -99,14 +145,16 @@
         /* Warning Banner */
         .warning-banner {
             width: 100%;
-            background-color: #1c1917;
-            border: 1px solid #444;
-            border-radius: 10px;
-            padding: 0.75rem 1.25rem;
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.10) 0%, rgba(28, 25, 23, 0.6) 40%);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+            border-radius: 14px;
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 1.2rem;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .warning-banner svg {
@@ -135,6 +183,14 @@
             text-align: center;
             width: 100%;
         }
+
+        .main-container > * {
+            opacity: 0;
+            animation: riseIn 1.2s var(--ease) forwards;
+        }
+        .main-container > *:nth-child(2) { animation-delay: 0.1s; }
+        .main-container > *:nth-child(3) { animation-delay: 0.2s; }
+        .main-container > *:nth-child(4) { animation-delay: 0.3s; }
 
         h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.4rem; }
         h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.4rem; }
@@ -172,56 +228,77 @@
             justify-content: center;
         }
 
-        @keyframes borderSpin {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
         .btn {
-            padding: 0.7rem 2.2rem;
-            border-radius: 12px;
-            background-color: #000000;
+            --glow: rgba(255, 255, 255, 0.5);
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             position: relative;
-            display: inline-block;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             text-align: center;
+            transition: transform 0.4s var(--ease), background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
-        .btn-gradient-1 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-2 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #7834D8 0%, #99004F 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-3 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        .btn-gradient-4 {
-            background-image: linear-gradient(#000000, #000000), linear-gradient(90deg, #00FFFF 0%, #0059FF 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
+        /* Soft colored halo instead of a hard outline */
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: var(--glow);
+            filter: blur(22px);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            animation: borderSpin 4s linear infinite;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
+
+        .btn:hover::before { opacity: 0.35; }
+
+        .btn-arrow {
+            display: inline-block;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* Primary action: solid, high-contrast */
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover::before { opacity: 0.55; }
+
+        .btn-primary { padding: 0.9rem 2.6rem; font-size: 1.1rem; }
+
+        /* Each button keeps its section's accent as a hover halo */
+        .btn-gradient-1 { --glow: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%); }
+        .btn-gradient-2 { --glow: linear-gradient(90deg, #7834D8 0%, #99004F 100%); }
+        .btn-gradient-3 { --glow: linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%); }
+        .btn-gradient-4 { --glow: linear-gradient(90deg, #00FFFF 0%, #0059FF 100%); }
 
         /* Footer */
         footer {
@@ -242,7 +319,60 @@
         .footer-lists ul { list-style-type: none; color: var(--text-sub); }
         .footer-lists li { margin-bottom: 0.3rem; }
         .footer-right { text-align: right; display: flex; flex-direction: column; gap: 0.3rem; }
-        .footer-right a { color: var(--text-sub); text-decoration: none; }
+        .footer-right a {
+            color: var(--text-sub);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-right a:hover { color: var(--text-main); }
+
+        /* --- Mobile Responsive Layout --- */
+        @media (max-width: 900px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .top-nav { padding: 1.2rem 1.5rem; }
+            .nav-links { padding: 0.5rem 0.9rem; gap: 1.1rem; }
+
+            .main-container { padding: 6rem 1.25rem 2rem 1.25rem; }
+
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.35rem; }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.9rem;
+            }
+
+            .btn, .btn-primary {
+                width: 100%;
+                max-width: 260px;
+                padding: 0.8rem 1.5rem;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.2rem;
+            }
+
+            .footer-lists { flex-direction: column; gap: 0.8rem; }
+            .footer-right { text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition-duration: 0.01ms !important;
+            }
+            .main-container > * { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -258,6 +388,7 @@
         </div>
     </header>
 
+    <div class="aurora" aria-hidden="true"></div>
     <canvas id="star-canvas"></canvas>
 
     <div class="main-container">
@@ -275,7 +406,7 @@
         <div class="download-section">
             <h1>Ready to make the <span class="text-gradient-switch">switch?</span></h1>
             <div class="btn-group">
-                <a href="https://github.com/mariowOS/OTA/raw/refs/heads/main/stable/latest.zip" class="btn btn-gradient-1">Download latest</a>
+                <a href="https://github.com/mariowOS/OTA/raw/refs/heads/main/stable/latest.zip" class="btn btn-gradient-1 btn-primary">Download latest</a>
             </div>
             <p style="margin-top: 0.4rem; font-size: 0.78rem;">
                 This version may prompt you to update when booted for the first time due to continuous updates &bull; Requires node.js and npm to be fully set up on your host
@@ -295,7 +426,7 @@
         <div class="download-section">
             <h2>Want to cook <span class="text-gradient-cook">yourself?</span></h2>
             <div class="btn-group">
-                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us &gt;</a>
+                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us <span class="btn-arrow">&rarr;</span></a>
                 <a href="https://github.com/mariowOS/development" class="btn btn-gradient-4">Fork our repo</a>
             </div>
         </div>
@@ -349,6 +480,11 @@
                 this.size = Math.random() * 1.5 + 0.5;
                 this.speedX = (Math.random() - 0.5) * 0.08;
                 this.speedY = (Math.random() - 0.5) * 0.08;
+                this.alpha = Math.random() * 0.4 + 0.3;
+                this.phase = Math.random() * Math.PI * 2;
+                this.twinkle = Math.random() * 0.02 + 0.005;
+                const tints = ['255, 255, 255', '255, 255, 255', '255, 255, 255', '252, 206, 255', '190, 235, 245', '200, 255, 215'];
+                this.tint = tints[Math.floor(Math.random() * tints.length)];
             }
 
             update() {
@@ -359,10 +495,12 @@
                 if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
                 if (this.y > height) this.y = 0;
+                this.phase += this.twinkle;
             }
 
             draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                const a = this.alpha * (0.65 + 0.35 * Math.sin(this.phase));
+                ctx.fillStyle = `rgba(${this.tint}, ${a})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
