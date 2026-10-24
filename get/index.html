@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mariowOS - Download</title>
-    
+
     <!-- Import Poppins Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg: #000000;
@@ -20,9 +21,14 @@
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html { -webkit-font-smoothing: antialiased; }
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
 
-        ::selection { background: rgba(62, 202, 227, 0.35); color: #fff; }
+        ::selection {
+            background: rgba(62, 202, 227, 0.35);
+            color: #fff;
+        }
 
         a:focus-visible {
             outline: 2px solid rgba(255, 255, 255, 0.6);
@@ -45,13 +51,25 @@
         }
 
         @keyframes auroraDrift {
-            0% { transform: translate3d(0, 0, 0) scale(1); }
-            100% { transform: translate3d(-4%, 3%, 0) scale(1.08); }
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(-4%, 3%, 0) scale(1.08);
+            }
         }
 
         @keyframes riseIn {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         * {
@@ -83,11 +101,11 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
         }
 
         .nav-logo {
-            height: 22px; 
+            height: 22px;
             object-fit: contain;
         }
 
@@ -103,7 +121,9 @@
             -webkit-backdrop-filter: blur(12px);
         }
 
-        .nav-links a { display: flex; }
+        .nav-links a {
+            display: flex;
+        }
 
         .nav-links img {
             height: 22px;
@@ -152,7 +172,7 @@
             display: flex;
             align-items: center;
             gap: 1.2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
@@ -184,16 +204,34 @@
             width: 100%;
         }
 
-        .main-container > * {
+        .main-container>* {
             opacity: 0;
             animation: riseIn 1.2s var(--ease) forwards;
         }
-        .main-container > *:nth-child(2) { animation-delay: 0.1s; }
-        .main-container > *:nth-child(3) { animation-delay: 0.2s; }
-        .main-container > *:nth-child(4) { animation-delay: 0.3s; }
 
-        h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.4rem; }
-        h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .main-container>*:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .main-container>*:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .main-container>*:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
 
         p {
             font-size: 0.9rem;
@@ -269,14 +307,18 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn:hover::before { opacity: 0.35; }
+        .btn:hover::before {
+            opacity: 0.35;
+        }
 
         .btn-arrow {
             display: inline-block;
             transition: transform 0.4s var(--ease);
         }
 
-        .btn:hover .btn-arrow { transform: translateX(4px); }
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
 
         /* Primary action: solid, high-contrast */
         .btn-primary {
@@ -290,15 +332,31 @@
             border-color: #ffffff;
         }
 
-        .btn-primary:hover::before { opacity: 0.55; }
+        .btn-primary:hover::before {
+            opacity: 0.55;
+        }
 
-        .btn-primary { padding: 0.9rem 2.6rem; font-size: 1.1rem; }
+        .btn-primary {
+            padding: 0.9rem 2.6rem;
+            font-size: 1.1rem;
+        }
 
         /* Each button keeps its section's accent as a hover halo */
-        .btn-gradient-1 { --glow: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%); }
-        .btn-gradient-2 { --glow: linear-gradient(90deg, #7834D8 0%, #99004F 100%); }
-        .btn-gradient-3 { --glow: linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%); }
-        .btn-gradient-4 { --glow: linear-gradient(90deg, #00FFFF 0%, #0059FF 100%); }
+        .btn-gradient-1 {
+            --glow: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%);
+        }
+
+        .btn-gradient-2 {
+            --glow: linear-gradient(90deg, #7834D8 0%, #99004F 100%);
+        }
+
+        .btn-gradient-3 {
+            --glow: linear-gradient(90deg, #8DFFAB 0%, #FFAA8B 100%);
+        }
+
+        .btn-gradient-4 {
+            --glow: linear-gradient(90deg, #00FFFF 0%, #0059FF 100%);
+        }
 
         /* Footer */
         footer {
@@ -309,22 +367,42 @@
             justify-content: space-between;
             align-items: flex-end;
             padding: 1rem 1.5rem 1.2rem 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.85rem;
             position: relative;
             z-index: 10;
         }
 
-        .footer-lists { display: flex; gap: 3rem; }
-        .footer-lists ul { list-style-type: none; color: var(--text-sub); }
-        .footer-lists li { margin-bottom: 0.3rem; }
-        .footer-right { text-align: right; display: flex; flex-direction: column; gap: 0.3rem; }
+        .footer-lists {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-lists ul {
+            list-style-type: none;
+            color: var(--text-sub);
+        }
+
+        .footer-lists li {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
         .footer-right a {
             color: var(--text-sub);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        .footer-right a:hover { color: var(--text-main); }
+
+        .footer-right a:hover {
+            color: var(--text-main);
+        }
 
         /* --- Mobile Responsive Layout --- */
         @media (max-width: 900px) {
@@ -335,13 +413,26 @@
                 overflow-y: auto;
             }
 
-            .top-nav { padding: 1.2rem 1.5rem; }
-            .nav-links { padding: 0.5rem 0.9rem; gap: 1.1rem; }
+            .top-nav {
+                padding: 1.2rem 1.5rem;
+            }
 
-            .main-container { padding: 6rem 1.25rem 2rem 1.25rem; }
+            .nav-links {
+                padding: 0.5rem 0.9rem;
+                gap: 1.1rem;
+            }
 
-            h1 { font-size: 1.7rem; }
-            h2 { font-size: 1.35rem; }
+            .main-container {
+                padding: 6rem 1.25rem 2rem 1.25rem;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
+            }
 
             .btn-group {
                 flex-direction: column;
@@ -349,7 +440,8 @@
                 gap: 0.9rem;
             }
 
-            .btn, .btn-primary {
+            .btn,
+            .btn-primary {
                 width: 100%;
                 max-width: 260px;
                 padding: 0.8rem 1.5rem;
@@ -362,19 +454,32 @@
                 gap: 1.2rem;
             }
 
-            .footer-lists { flex-direction: column; gap: 0.8rem; }
-            .footer-right { text-align: center; }
+            .footer-lists {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation: none !important;
                 transition-duration: 0.01ms !important;
             }
-            .main-container > * { opacity: 1; }
+
+            .main-container>* {
+                opacity: 1;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header Navigation -->
@@ -392,13 +497,16 @@
     <canvas id="star-canvas"></canvas>
 
     <div class="main-container">
-        
+
         <!-- Warning Banner -->
         <div class="warning-banner">
-            <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 16h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L1 21h22L12 2zm1 16h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+            </svg>
             <div class="warning-text">
                 <h4>Insiders channel updates warning</h4>
-                <p>Due to the latest release the insiders channel will expect slowdowns until we start developing on the new upcoming release.</p>
+                <p>Due to the latest release the insiders channel will expect slowdowns until we start developing on the
+                    new upcoming release.</p>
             </div>
         </div>
 
@@ -406,10 +514,12 @@
         <div class="download-section">
             <h1>Ready to make the <span class="text-gradient-switch">switch?</span></h1>
             <div class="btn-group">
-                <a href="https://github.com/mariowOS/OTA/raw/refs/heads/main/stable/latest.zip" class="btn btn-gradient-1 btn-primary">Download latest</a>
+                <a href="https://github.com/mariowOS/OTA/raw/refs/heads/main/stable/latest.zip"
+                    class="btn btn-gradient-1 btn-primary">Download latest</a>
             </div>
             <p style="margin-top: 0.4rem; font-size: 0.78rem;">
-                This version may prompt you to update when booted for the first time due to continuous updates &bull; Requires node.js and npm to be fully set up on your host
+                This version may prompt you to update when booted for the first time due to continuous updates &bull;
+                Requires node.js and npm to be fully set up on your host
             </p>
         </div>
 
@@ -426,7 +536,8 @@
         <div class="download-section">
             <h2>Want to cook <span class="text-gradient-cook">yourself?</span></h2>
             <div class="btn-group">
-                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us <span class="btn-arrow">&rarr;</span></a>
+                <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-gradient-3">Work with us <span
+                        class="btn-arrow">&rarr;</span></a>
                 <a href="https://github.com/mariowOS/development" class="btn btn-gradient-4">Fork our repo</a>
             </div>
         </div>
@@ -437,7 +548,11 @@
     <footer>
         <div>
             <h2 style="margin: 0; font-size: 1.3rem;">mariowstech</h2>
-            <p style="margin: 0; font-size: 0.8rem; margin-top: 3px;">Made with <svg style="width:11px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> by</p>
+            <p style="margin: 0; font-size: 0.8rem; margin-top: 3px;">Made with <svg
+                    style="width:11px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24">
+                    <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg> by</p>
         </div>
         <div class="footer-lists">
             <ul>
@@ -520,4 +635,5 @@
         animateCanvas();
     </script>
 </body>
+
 </html>

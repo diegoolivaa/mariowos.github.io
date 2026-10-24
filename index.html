@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mariowOS</title>
-    
     <!-- Import Poppins Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --bg: #000000;
@@ -20,9 +19,14 @@
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html { -webkit-font-smoothing: antialiased; }
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
 
-        ::selection { background: rgba(191, 0, 255, 0.35); color: #fff; }
+        ::selection {
+            background: rgba(191, 0, 255, 0.35);
+            color: #fff;
+        }
 
         * {
             margin: 0;
@@ -49,8 +53,7 @@
             inset: -20%;
             z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(40% 35% at 15% 20%, rgba(255, 85, 43, 0.10), transparent 70%),
+            background: radial-gradient(40% 35% at 15% 20%, rgba(255, 85, 43, 0.10), transparent 70%),
                 radial-gradient(35% 40% at 85% 75%, rgba(191, 0, 255, 0.10), transparent 70%),
                 radial-gradient(30% 30% at 70% 15%, rgba(0, 89, 255, 0.08), transparent 70%);
             filter: blur(40px);
@@ -58,8 +61,13 @@
         }
 
         @keyframes auroraDrift {
-            0% { transform: translate3d(0, 0, 0) scale(1); }
-            100% { transform: translate3d(-4%, 3%, 0) scale(1.08); }
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(-4%, 3%, 0) scale(1.08);
+            }
         }
 
         /* Top Navigation Header */
@@ -76,12 +84,13 @@
             pointer-events: none;
         }
 
-        .nav-logo, .nav-links a {
+        .nav-logo,
+        .nav-links a {
             pointer-events: auto;
         }
 
         .nav-logo {
-            height: 20px; 
+            height: 20px;
             object-fit: contain;
         }
 
@@ -98,20 +107,20 @@
             pointer-events: auto;
         }
 
-        .nav-links a { display: flex; }
+        .nav-links a {
+            display: flex;
+        }
 
         .nav-links img {
             height: 20px;
             opacity: 0.6;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s var(--ease);
         }
 
         .nav-links img:hover {
             opacity: 1;
             transform: translateY(-1px);
         }
-
-        .nav-links img { transition: opacity 0.3s ease, transform 0.3s var(--ease); }
 
         /* Section progress dots */
         .section-dots {
@@ -136,7 +145,9 @@
             transition: height 0.5s var(--ease), background 0.5s ease;
         }
 
-        .section-dots button:hover { background: rgba(255, 255, 255, 0.6); }
+        .section-dots button:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
 
         .section-dots button.active {
             height: 24px;
@@ -204,8 +215,14 @@
             gap: 4rem;
         }
 
-        .grid-split.reverse { flex-direction: row-reverse; }
-        .text-content { flex: 1; }
+        .grid-split.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .text-content {
+            flex: 1;
+        }
+
         .visual-content {
             flex: 1;
             position: relative;
@@ -214,11 +231,37 @@
         }
 
         /* Typography */
-        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; text-align: center; }
-        h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; }
-        h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; text-align: center; }
-        p { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 1.5rem; }
-        strong { color: var(--text-main); font-weight: 600; }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
 
         /* Specific Gradients */
         .text-gradient-switch {
@@ -235,8 +278,15 @@
         }
 
         @keyframes floaty {
-            0%, 100% { translate: 0 0; }
-            50% { translate: 0 -10px; }
+
+            0%,
+            100% {
+                translate: 0 0;
+            }
+
+            50% {
+                translate: 0 -10px;
+            }
         }
 
         .scroll-indicator {
@@ -261,9 +311,20 @@
         }
 
         @keyframes scrollLine {
-            0% { transform: scaleY(0); opacity: 1; }
-            60% { transform: scaleY(1); opacity: 1; }
-            100% { transform: scaleY(1); opacity: 0; }
+            0% {
+                transform: scaleY(0);
+                opacity: 1;
+            }
+
+            60% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scaleY(1);
+                opacity: 0;
+            }
         }
 
         .warp-container {
@@ -285,8 +346,10 @@
 
         .warp-image {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border-radius: 12px;
             object-fit: cover;
             transition: all 2.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -297,7 +360,7 @@
             opacity: 1;
             transform: scale(1) translateZ(0) rotateX(0);
             filter: blur(0);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .warp-new {
@@ -318,10 +381,9 @@
             opacity: 1;
             transform: scale(1) translateZ(0) rotateX(0);
             filter: blur(0);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px var(--border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--border);
         }
 
-        /* Colored halo that blooms in once the warp completes */
         .warp-container::before {
             content: "";
             position: absolute;
@@ -359,9 +421,7 @@
             overflow: hidden;
             vertical-align: bottom;
             filter: blur(12px);
-            transition: max-width 2s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 2s cubic-bezier(0.16, 1, 0.3, 1), 
-                        filter 2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: max-width 2s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s cubic-bezier(0.16, 1, 0.3, 1), filter 2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .warped-text .reimagined-wrapper {
@@ -383,7 +443,7 @@
             width: 100%;
             border-radius: 12px;
             border: 1px solid var(--border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 1;
             transition: transform 0.8s var(--ease), box-shadow 0.8s var(--ease);
@@ -391,10 +451,9 @@
 
         .ui-image:hover {
             transform: translateY(-4px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
         }
 
-        /* Soft glow behind screenshots */
         .visual-content::before {
             content: "";
             position: absolute;
@@ -413,24 +472,37 @@
             left: -30px;
             width: 80px;
             z-index: 2;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
             animation: floaty 5s ease-in-out infinite;
         }
 
+        /* Enhanced Free-Floating OS Icons Container */
         .os-icons-container {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             align-items: center;
+            justify-content: center;
             position: relative;
             z-index: 1;
+            padding: 2.5rem;
+            min-height: 200px;
         }
+
         .os-icons-container img {
-            height: 60px;
-            transition: transform 0.5s var(--ease), filter 0.5s ease;
+            height: 64px;
+            width: 64px;
+            object-fit: contain;
+            cursor: pointer;
+            will-change: transform;
+            transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
         }
-        .os-icons-container img:hover {
-            transform: translateY(-6px) scale(1.05);
-            filter: drop-shadow(0 10px 25px rgba(255, 255, 255, 0.25));
+
+        /* Hover state: Scale exactly to 1.25, pause movement, bring to focus */
+        .os-icons-container img.hovered {
+            transform: scale(1.25) translateY(-8px) !important;
+            filter: drop-shadow(0 16px 35px rgba(255, 255, 255, 0.35));
+            z-index: 100;
         }
 
         .acode-wrap {
@@ -478,7 +550,6 @@
             transition: transform 0.4s var(--ease), background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Soft colored halo instead of a hard outline */
         .btn::before {
             content: "";
             position: absolute;
@@ -497,16 +568,19 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn:hover::before { opacity: 0.35; }
+        .btn:hover::before {
+            opacity: 0.35;
+        }
 
         .btn-arrow {
             display: inline-block;
             transition: transform 0.4s var(--ease);
         }
 
-        .btn:hover .btn-arrow { transform: translateX(4px); }
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
 
-        /* Primary action: solid, high-contrast */
         .btn-primary {
             background: #ffffff;
             color: #000000;
@@ -518,10 +592,17 @@
             border-color: #ffffff;
         }
 
-        .btn-primary:hover::before { opacity: 0.55; }
+        .btn-primary:hover::before {
+            opacity: 0.55;
+        }
 
-        .btn-get { --glow: linear-gradient(90deg, #FFF600 0%, #D8A234 74%, #8C0099 100%); }
-        .btn-work { --glow: linear-gradient(90deg, #FF4400 0%, #0059FF 100%); }
+        .btn-get {
+            --glow: linear-gradient(90deg, #FFF600 0%, #D8A234 74%, #8C0099 100%);
+        }
+
+        .btn-work {
+            --glow: linear-gradient(90deg, #FF4400 0%, #0059FF 100%);
+        }
 
         footer {
             width: 100%;
@@ -531,23 +612,43 @@
             align-items: flex-end;
             margin-top: auto;
             padding-bottom: 3vh;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
             font-size: 0.85rem;
         }
 
-        .footer-lists { display: flex; gap: 3rem; }
-        .footer-lists ul { list-style-type: none; color: var(--text-sub); }
-        .footer-lists li { margin-bottom: 0.5rem; }
-        .footer-right { text-align: right; display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-lists {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-lists ul {
+            list-style-type: none;
+            color: var(--text-sub);
+        }
+
+        .footer-lists li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         .footer-right a {
             color: var(--text-sub);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        .footer-right a:hover { color: var(--text-main); }
 
-        /* --- Mobile Responsive Layout (with Scroll Blocking / Snap) --- */
+        .footer-right a:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Mobile Responsive Layout --- */
         @media (max-width: 900px) {
             .top-nav {
                 padding: 1.5rem 2rem;
@@ -557,7 +658,8 @@
                 padding: 5rem 5% 3rem 5%;
             }
 
-            .grid-split, .grid-split.reverse {
+            .grid-split,
+            .grid-split.reverse {
                 flex-direction: column;
                 gap: 1.5rem;
                 text-align: center !important;
@@ -567,10 +669,22 @@
                 text-align: center !important;
             }
 
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.4rem; }
-            h3 { font-size: 1.2rem; }
-            p { font-size: 0.95rem; margin-bottom: 1rem; }
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
 
             #hero-text {
                 white-space: normal;
@@ -618,19 +732,32 @@
                 left: -10px;
             }
 
-            .section-dots { display: none; }
-            .nav-links { padding: 0.5rem 0.9rem; gap: 1.1rem; }
+            .section-dots {
+                display: none;
+            }
+
+            .nav-links {
+                padding: 0.5rem 0.9rem;
+                gap: 1.1rem;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation: none !important;
                 transition-duration: 0.01ms !important;
             }
-            .scroll-container { scroll-behavior: auto; }
+
+            .scroll-container {
+                scroll-behavior: auto;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header Navigation -->
@@ -649,7 +776,6 @@
     <nav class="section-dots" aria-label="Sections"></nav>
 
     <div class="scroll-container">
-        
         <!-- Section 1: Pure Intro -->
         <section id="intro">
             <img src="images/tristar.png" alt="Tristar" class="tristar-icon fade-element visible">
@@ -662,9 +788,9 @@
                 <img src="images/desktopold.png" alt="Old Design" class="warp-image warp-old">
                 <img src="images/desktopnew.png" alt="New Design" class="warp-image warp-new">
             </div>
-
             <h1 id="hero-text">
-                The desktop you know and love<span class="reimagined-wrapper"><span class="reimagined-text">, reimagined.</span></span>
+                The desktop you know and love<span class="reimagined-wrapper">, <span class="reimagined-text">
+                        reimagined.</span></span>
             </h1>
         </section>
 
@@ -675,9 +801,10 @@
             </div>
             <div class="grid-split fade-element">
                 <div class="text-content">
-                    <p><strong>Accessible, fast, smooth, customizable.</strong><br>
-                    Our new desktop is twice as fast as the old DosVM-based mariowOS. And looks better, too.</p>
-                    <p>Aesthetically pleasant blurs, refined design language across applications and oh, we got animations too.</p>
+                    <p><strong>Accessible, fast, smooth, customizable.</strong><br> Our new desktop is twice as fast as
+                        the old DosVM-based mariowOS. And looks better, too.</p>
+                    <p>Aesthetically pleasant blurs, refined design language across applications and oh, we got
+                        animations too.</p>
                     <p>Deeply integrated with your base OS, wait did we say "base OS?"</p>
                 </div>
                 <div class="visual-content">
@@ -690,17 +817,18 @@
         <!-- Section 4: OS Compatibility -->
         <section>
             <div class="grid-split reverse fade-element">
-                <div class="text-content" style="text-align: right;">
+                <div class="text-content" style="text-align: left;">
                     <h2>We run on top of your existing OS.</h2>
                     <p>Web based, RAM efficient and is a separate environment, detached from your existing system.</p>
-                    <p>Doesn't matter if you're running an x86, arm or a potato based CPU, mariowOS handles all that with ease.</p>
+                    <p>Doesn't matter if you're running an x86, arm or a potato based CPU, mariowOS handles all that
+                        with ease.</p>
                     <p>Your files are separated, your browser is, your messages are.</p>
                 </div>
                 <div class="visual-content">
-                    <div class="os-icons-container">
-                        <img src="images/windows.webp" alt="Windows">
-                        <img src="images/apple.webp" alt="Mac">
-                        <img src="images/tux.webp" alt="Linux">
+                    <div class="os-icons-container" id="os-icons">
+                        <img src="images/windows.webp" alt="Windows" class="floating-os-icon">
+                        <img src="images/apple.webp" alt="Mac" class="floating-os-icon">
+                        <img src="images/tux.webp" alt="Linux" class="floating-os-icon">
                     </div>
                 </div>
             </div>
@@ -710,8 +838,9 @@
         <section>
             <div class="grid-split fade-element">
                 <div class="text-content">
-                    <p><strong>Fast, reliable, open-source applications</strong><br>
-                    No matter what you must do, mariowOS is ready to assist all of that. We got a lot of apps to serve you and improve your productivity.</p>
+                    <p><strong>Fast, reliable, open-source applications</strong><br> No matter what you must do,
+                        mariowOS is ready to assist all of that. We got a lot of apps to serve you and improve your
+                        productivity.</p>
                     <p>Need more? We got the store too with community-ran applications.</p>
                     <p>Need even more?? Well, develop your own with...</p>
                 </div>
@@ -723,40 +852,51 @@
 
         <!-- Section 6: ACode -->
         <section id="acode">
-            <div class="fade-element" style="text-align: center; width: 100%; max-width: 900px;">
-                <h3>ACode, your way of developing</h3>
-                <div class="acode-wrap">
-                    <img src="images/acode.png" alt="ACode Interface" class="ui-image">
-                </div>
-                <p><strong>Based off monaco</strong>, let's you develop apps for mariowOS and/or web-apps with run, builder and terminal integration</p>
+            <h1>Did we hear...<br><span
+                    style="background: linear-gradient(90deg, #8a2be2, #FF552B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold;">Developing?</span>
+            </h1>
+            <p>We got you!</p>
+            <div class="btn-group" style="justify-content: center;">
+                <a href="developers/index.html" class="btn btn-primary btn-get">Learn more... <span
+                        class="btn-arrow">&rarr;</span></a>
+                <a href="https://mariowstech.gitbook.io/mariowos-docs/" class="btn btn-work">Learn even more! <span
+                        class="btn-arrow">&rarr;</span></a>
             </div>
         </section>
 
         <!-- Section 7: CTA & Footer -->
         <section id="cta" style="justify-content: space-between;">
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div
+                style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="fade-element" style="text-align: center;">
-                    <h1 style="font-size: 2.5rem;">Ready to make the <span class="text-gradient-switch">switch?</span></h1>
+                    <h1 style="font-size: 2.5rem;">Ready to make the <span class="text-gradient-switch">switch?</span>
+                    </h1>
                     <div class="btn-group" style="justify-content: center;">
-                        <a href="get/index.html" class="btn btn-primary btn-get">Get mariowOS <span class="btn-arrow">&rarr;</span></a>
-                        <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-work">Work with us <span class="btn-arrow">&rarr;</span></a>
+                        <a href="get/index.html" class="btn btn-primary btn-get">Get mariowOS <span
+                                class="btn-arrow">&rarr;</span></a>
+                        <a href="https://discord.gg/QxjDUeQGMu" class="btn btn-work">Work with us <span
+                                class="btn-arrow">&rarr;</span></a>
                     </div>
                 </div>
             </div>
-
             <footer class="fade-element">
                 <div>
                     <h2 style="margin: 0; font-size: 1.3rem;">mariowstech</h2>
-                    <p style="margin: 0; font-size: 0.8rem; margin-top: 5px;">Made with <svg style="width:12px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> by</p>
+                    <p style="margin: 0; font-size: 0.8rem; margin-top: 5px;">Made with <svg
+                            style="width:12px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg> by</p>
                 </div>
                 <div class="footer-lists">
                     <ul>
-                        <li>davidjone16</li>
-                        <li>erti</li>
-                        <li>kevadesu</li>
+                        <li>@davidjone16</li>
+                        <li>@erti</li>
+                        <li>@kevadesu</li>
                     </ul>
                     <ul>
-                        <li>kianish</li>
+                        <li>@kianish</li>
+                        <li>@diegoolivaa</li>
                         <li>and you!</li>
                     </ul>
                 </div>
@@ -766,10 +906,10 @@
                 </div>
             </footer>
         </section>
-
     </div>
 
     <script>
+        // Star Canvas
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -783,7 +923,6 @@
                 stars.push(new Star());
             }
         }
-
         window.addEventListener('resize', initCanvas);
 
         class Star {
@@ -799,18 +938,15 @@
                 const tints = ['255, 255, 255', '255, 255, 255', '255, 255, 255', '255, 200, 180', '220, 190, 255', '190, 215, 255'];
                 this.tint = tints[Math.floor(Math.random() * tints.length)];
             }
-
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
                 if (this.y > height) this.y = 0;
                 this.phase += this.twinkle;
             }
-
             draw() {
                 const a = this.alpha * (0.65 + 0.35 * Math.sin(this.phase));
                 ctx.fillStyle = `rgba(${this.tint}, ${a})`;
@@ -828,20 +964,19 @@
             });
             requestAnimationFrame(animateCanvas);
         }
-
         initCanvas();
         animateCanvas();
 
+        // Intersection Observer for Sections & Warp
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
-                    if(entry.target.id === 'warp-demo') {
+                    if (entry.target.id === 'warp-demo') {
                         setTimeout(() => {
                             document.getElementById('warp-demo').classList.add('warped');
                             document.getElementById('hero-text').classList.add('warped-text');
-                        }, 900); 
+                        }, 900);
                     }
                 }
             });
@@ -870,6 +1005,58 @@
         }, { threshold: 0.6 });
 
         sections.forEach(section => dotObserver.observe(section));
+
+        // Organic Free-Floating & Hover Physics for OS Icons
+        const iconElements = document.querySelectorAll('.floating-os-icon');
+        const iconData = Array.from(iconElements).map((el, index) => {
+            return {
+                el: el,
+                x: 0,
+                y: 0,
+                vx: (Math.random() - 0.5) * 0.9,
+                vy: (Math.random() - 0.5) * 0.9,
+                angle: Math.random() * 360,
+                vAngle: (Math.random() - 0.5) * 0.5,
+                hovered: false,
+                phase: index * 2.1
+            };
+        });
+
+        iconData.forEach(item => {
+            item.el.addEventListener('mouseenter', () => {
+                item.hovered = true;
+                item.el.classList.add('hovered');
+            });
+            item.el.addEventListener('mouseleave', () => {
+                item.hovered = false;
+                item.el.classList.remove('hovered');
+            });
+        });
+
+        function animateIcons() {
+            iconData.forEach(item => {
+                if (!item.hovered) {
+                    // Smooth dynamic wandering motion
+                    item.phase += 0.025;
+                    item.x += item.vx + Math.sin(item.phase) * 0.35;
+                    item.y += item.vy + Math.cos(item.phase * 0.7) * 0.35;
+
+                    // Keep icons floating within bounds
+                    const maxRangeX = 30;
+                    const maxRangeY = 24;
+                    if (item.x > maxRangeX || item.x < -maxRangeX) item.vx *= -1;
+                    if (item.y > maxRangeY || item.y < -maxRangeY) item.vy *= -1;
+
+                    item.angle += item.vAngle * 0.15;
+                    if (item.angle > 10 || item.angle < -10) item.vAngle *= -1;
+
+                    item.el.style.transform = `translate(${item.x}px, ${item.y}px) rotate(${item.angle}deg) scale(1)`;
+                }
+            });
+            requestAnimationFrame(animateIcons);
+        }
+        requestAnimationFrame(animateIcons);
     </script>
 </body>
+
 </html>
