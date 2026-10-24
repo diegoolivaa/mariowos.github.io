@@ -1,1 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mariowOS - Developer Page</title>
+    <!-- Import Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --text-main: #ffffff;
+            --text-sub: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.04);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background: rgba(62, 202, 227, 0.35);
+            color: #fff;
+        }
+
+        a:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        /* Soft aurora glow behind the stars */
+        .aurora {
+            position: fixed;
+            inset: -20%;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(40% 35% at 20% 25%, rgba(62, 202, 227, 0.09), transparent 70%),
+                radial-gradient(35% 40% at 80% 70%, rgba(120, 52, 216, 0.11), transparent 70%),
+                radial-gradient(30% 30% at 50% 100%, rgba(141, 255, 171, 0.05), transparent 70%);
+            filter: blur(40px);
+            animation: auroraDrift 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraDrift {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(-4%, 3%, 0) scale(1.08);
+            }
+        }
+
+        @keyframes rotateAnim {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: rotate(-5deg) scale(1.1);
+            }
+
+            50% {
+                transform: rotate(0deg) scale(1.15);
+            }
+
+            75% {
+                transform: rotate(5deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Header */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+        }
+
+        .nav-logo {
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 0.6rem 1.1rem;
+            border-radius: 999px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nav-links a {
+            display: flex;
+        }
+
+        .nav-links img {
+            height: 22px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease, transform 0.3s var(--ease);
+        }
+
+        .nav-links img:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        /* Section progress dots */
+        .section-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            z-index: 100;
+        }
+
+        .section-dots button {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.25);
+            transition: height 0.5s var(--ease), background 0.5s ease;
+        }
+
+        .section-dots button:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .section-dots button.active {
+            height: 24px;
+            background: linear-gradient(180deg, #3ECAE3 0%, #7834D8 100%);
+        }
+
+        /* Interactive Star Canvas */
+        #star-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Fullscreen Scroll Setup */
+        .scroll-container {
+            width: 100vw;
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 6rem 10% 4rem 10%;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            gap: clamp(2rem, 5vw, 4rem);
+        }
+
+        /* Warning Banner / Code Wrap */
+        .acode-wrap {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            margin: clamp(1.5rem, 4vw, 2.5rem) 0;
+            padding: clamp(0.45rem, 1.2vw, 0.8rem);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), inset 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .acode-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 18% 10%;
+            z-index: -1;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #ff4400, #0059ff);
+            filter: blur(48px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .ui-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        /* Section Blocks */
+        .download-section {
+            text-align: center;
+            width: 100%;
+            max-width: 850px;
+            padding: 1rem 0;
+        }
+
+        #present {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: radial-gradient(ellipse at center, rgba(62, 202, 227, 0.1), transparent 58%);
+        }
+
+        #acode {
+            width: 100%;
+            display: grid;
+            place-items: center;
+            padding: 1rem 0;
+        }
+
+        #acode .fade-element {
+            width: 100%;
+            max-width: 1000px;
+            margin-inline: auto;
+            text-align: center;
+            padding: clamp(1.5rem, 4vw, 2.75rem);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            background: linear-gradient(155deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015));
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+        }
+
+        #acode h3 {
+            margin: 0 0 1.25rem;
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            line-height: 1.2;
+            letter-spacing: -0.035em;
+        }
+
+        #acode .fade-element>p {
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        #acode .fade-element>p strong {
+            color: #fff;
+        }
+
+        .present-copy {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            text-align: center;
+            clip-path: inset(0 50% 0 50%);
+            opacity: 0;
+            transform: translateY(24px) scale(0.96);
+            transition: clip-path 1.1s var(--ease), opacity 0.7s ease, transform 1s var(--ease);
+        }
+
+        #present.is-visible .present-copy {
+            clip-path: inset(0);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .present-copy p {
+            margin-bottom: 0.75rem;
+            color: #b9dff0;
+            font-size: 0.85rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+
+        .present-copy h2 {
+            margin: 0;
+            font-size: clamp(2.5rem, 8vw, 6.5rem);
+            line-height: 1.05;
+            letter-spacing: -0.055em;
+            background: linear-gradient(100deg, #fff 15%, #bcecff 50%, #d8b8ff 85%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .present-confetti {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .present-scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 2.5vw + 0.5rem, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        p {
+            font-size: clamp(0.9rem, 1vw + 0.2rem, 1.1rem);
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        /* Gradients */
+        .text-gradient-switch {
+            background: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-bounce {
+            display: inline-block;
+            background: linear-gradient(90deg, #7834D8 0%, #99004F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.85;
+            transition: transform 0.4s var(--ease), opacity 0.3s ease;
+        }
+
+        .text-gradient-bounce:hover {
+            opacity: 1;
+            animation: rotateAnim 1s ease-in-out infinite;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            max-width: 950px;
+            margin: 3rem auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-lists {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-lists ul {
+            list-style-type: none;
+            color: var(--text-sub);
+        }
+
+        .footer-lists li {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .footer-right a {
+            color: var(--text-sub);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-right a:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Mobile Responsive Layout --- */
+        @media (max-width: 900px) {
+            .top-nav {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .nav-links {
+                padding: 0.5rem 0.9rem;
+                gap: 1.1rem;
+            }
+
+            section {
+                padding: 5rem 5% 3rem 5%;
+                min-height: 100vh;
+            }
+
+            #present {
+                height: auto;
+                min-height: 68vh;
+            }
+
+            #acode .fade-element {
+                padding: 1.4rem 1rem;
+                border-radius: 22px;
+            }
+
+            .acode-wrap {
+                border-radius: 16px;
+            }
+
+            .ui-image {
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.2rem;
+            }
+
+            .footer-lists {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            .section-dots {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-nav">
+        <a href="https://mariowos.github.io/">
+            <img src="./mariowos-icon.png" alt="mariowOS" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="https://github.com/mariowOS/" target="_blank"><img src="./github.webp" alt="GitHub"></a>
+            <a href="https://discord.gg/QxjDUeQGMu" target="_blank"><img src="./discord.webp" alt="Discord"></a>
+        </div>
+    </header>
+
+    <div class="aurora" aria-hidden="true"></div>
+    <canvas id="star-canvas"></canvas>
+
+    <!-- Section progress dots ("balls") -->
+    <nav class="section-dots" aria-label="Sections"></nav>
+
+    <div class="scroll-container">
+        <!-- Section 1: Intro -->
+        <section>
+            <div class="main-container">
+                <div class="download-section">
+                    <h1>Did you know you could <br><span class="text-gradient-switch">develop your apps with</span><span
+                            class="text-gradient-bounce"> mariowOS?</span></h1>
+                    <p style="margin-top: 0.5rem; font-size: 0.78rem;">yep! that's right! and it's easier than you
+                        think!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Present -->
+        <section id="present" aria-label="Introducing mariowOS development">
+            <canvas class="present-confetti" aria-hidden="true"></canvas>
+            <div class="present-copy">
+                <p>Something exciting is here</p>
+                <h2>We present to you...</h2>
+            </div>
+            <span class="present-scroll-hint" aria-hidden="true">Keep scrolling ↓</span>
+        </section>
+
+        <!-- Section 3: ACode & Footer -->
+        <section style="justify-content: space-between; min-height: 100vh;">
+            <div class="main-container" style="width: 100%; margin-top: 2rem;">
+                <div id="acode">
+                    <div class="fade-element">
+                        <h3>ACode, your way of developing</h3>
+                        <div class="acode-wrap">
+                            <img src="./acode.png" alt="ACode Interface" class="ui-image">
+                        </div>
+                        <p><strong>Based off monaco</strong>, lets you develop apps for mariowOS and/or web-apps with
+                            run, builder and terminal integration</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                <div>
+                    <h2 style="margin: 0; font-size: 1.3rem;">mariowstech</h2>
+                    <p style="margin: 0; font-size: 0.8rem; margin-top: 3px;">Made with
+                        <svg style="width:11px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg> by
+                    </p>
+                </div>
+                <div class="footer-lists">
+                    <ul>
+                        <li>@davidjone16</li>
+                        <li>@erti</li>
+                        <li>@kevadesu</li>
+                    </ul>
+                    <ul>
+                        <li>@kianish</li>
+                        <li>@diegoolivaa</li>
+                        <li>and you!</li>
+                    </ul>
+                </div>
+                <div class="footer-right">
+                    <a href="https://mariowos.github.io/security">Security bulletins</a>
+                    <a href="#">Join beta</a>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <script>
+        // Section progress dots generator & observer
+        const sections = document.querySelectorAll('.scroll-container section');
+        const dotsNav = document.querySelector('.section-dots');
+
+        const dots = Array.from(sections).map((section, i) => {
+            const dot = document.createElement('button');
+            dot.setAttribute('aria-label', `Go to section ${i + 1}`);
+            dot.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth' }));
+            dotsNav.appendChild(dot);
+            return dot;
+        });
+
+        const dotObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(sections).indexOf(entry.target);
+                    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => dotObserver.observe(section));
+
+        // Confetti script
+        const presentSection = document.getElementById('present');
+        const confettiCanvas = presentSection.querySelector('.present-confetti');
+        const confettiContext = confettiCanvas.getContext('2d');
+        const confettiColors = ['#3ECAE3', '#FCCEFF', '#8DFFAB', '#FFAA8B', '#ffffff', '#7834D8'];
+        let confettiPieces = [];
+        let confettiFrame;
+
+        function resizeConfettiCanvas() {
+            const bounds = presentSection.getBoundingClientRect();
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            confettiCanvas.width = bounds.width * pixelRatio;
+            confettiCanvas.height = bounds.height * pixelRatio;
+            confettiContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        }
+
+        function popConfetti() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const bounds = presentSection.getBoundingClientRect();
+            resizeConfettiCanvas();
+            const colors = confettiColors;
+            for (let i = 0; i < 150; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 3 + Math.random() * 8;
+                confettiPieces.push({
+                    x: bounds.width * (0.2 + Math.random() * 0.6),
+                    y: bounds.height * (0.35 + Math.random() * 0.35),
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 3,
+                    size: 4 + Math.random() * 7,
+                    rotation: Math.random() * Math.PI,
+                    spin: (Math.random() - 0.5) * 0.24,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 1
+                });
+            }
+            if (!confettiFrame) animateConfetti();
+        }
+
+        function animateConfetti() {
+            const bounds = presentSection.getBoundingClientRect();
+            confettiContext.clearRect(0, 0, bounds.width, bounds.height);
+            confettiPieces = confettiPieces.filter(piece => piece.life > 0);
+            confettiPieces.forEach(piece => {
+                piece.x += piece.vx;
+                piece.y += piece.vy;
+                piece.vy += 0.13;
+                piece.vx *= 0.995;
+                piece.rotation += piece.spin;
+                piece.life -= 0.009;
+                confettiContext.save();
+                confettiContext.globalAlpha = Math.min(1, piece.life * 2);
+                confettiContext.translate(piece.x, piece.y);
+                confettiContext.rotate(piece.rotation);
+                confettiContext.fillStyle = piece.color;
+                confettiContext.fillRect(-piece.size / 2, -piece.size / 3, piece.size, piece.size * 0.65);
+                confettiContext.restore();
+            });
+            if (confettiPieces.length) {
+                confettiFrame = requestAnimationFrame(animateConfetti);
+            } else {
+                confettiFrame = null;
+            }
+        }
+
+        resizeConfettiCanvas();
+        window.addEventListener('resize', resizeConfettiCanvas);
+
+        const presentObserver = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting)) {
+                presentSection.classList.add('is-visible');
+                popConfetti();
+                presentObserver.disconnect();
+            }
+        }, { threshold: 0.45 });
+
+        presentObserver.observe(presentSection);
+
+        // Star Canvas
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        window.addEventListener('resize', initCanvas);
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.08;
+                this.speedY = (Math.random() - 0.5) * 0.08;
+                this.alpha = Math.random() * 0.4 + 0.3;
+                this.phase = Math.random() * Math.PI * 2;
+                this.twinkle = Math.random() * 0.02 + 0.005;
+                const tints = ['255, 255, 255', '255, 255, 255', '255, 255, 255', '252, 206, 255', '190, 235, 245', '200, 255, 215'];
+                this.tint = tints[Math.floor(Math.random() * tints.length)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+                this.phase += this.twinkle;
+            }
+            draw() {
+                const a = this.alpha * (0.65 + 0.35 * Math.sin(this.phase));
+                ctx.fillStyle = `rgba(${this.tint}, ${a})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        initCanvas();
+        animateCanvas();
+    </script>
+</body>
+
+</html>
