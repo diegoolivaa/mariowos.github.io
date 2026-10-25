@@ -21,12 +21,24 @@
 
         html {
             -webkit-font-smoothing: antialiased;
-            scroll-behavior: smooth;
         }
 
         ::selection {
             background: rgba(62, 202, 227, 0.35);
             color: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow: hidden;
         }
 
         a:focus-visible {
@@ -41,7 +53,8 @@
             inset: -20%;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(40% 35% at 20% 25%, rgba(62, 202, 227, 0.09), transparent 70%),
+            background:
+                radial-gradient(40% 35% at 20% 25%, rgba(62, 202, 227, 0.09), transparent 70%),
                 radial-gradient(35% 40% at 80% 70%, rgba(120, 52, 216, 0.11), transparent 70%),
                 radial-gradient(30% 30% at 50% 100%, rgba(141, 255, 171, 0.05), transparent 70%);
             filter: blur(40px);
@@ -80,36 +93,28 @@
             }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            width: 100vw;
-            overflow-x: hidden;
-        }
-
         /* Top Navigation Header */
         .top-nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1.5rem 3.5rem;
+            padding: 2rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            pointer-events: none;
+        }
+
+        .nav-logo,
+        .nav-links a {
+            pointer-events: auto;
         }
 
         .nav-logo {
-            height: 22px;
+            height: 20px;
+            width: auto;
             object-fit: contain;
         }
 
@@ -123,6 +128,7 @@
             border: 1px solid var(--border);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            pointer-events: auto;
         }
 
         .nav-links a {
@@ -130,7 +136,9 @@
         }
 
         .nav-links img {
-            height: 22px;
+            height: 20px;
+            width: auto;
+            object-fit: contain;
             opacity: 0.6;
             transition: opacity 0.3s ease, transform 0.3s var(--ease);
         }
@@ -177,28 +185,74 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
+            height: 100dvh;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* Fullscreen Scroll Setup */
+        /* Fullscreen Scroll Setup with Scrollbar Completely Hidden */
         .scroll-container {
-            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
             position: relative;
             z-index: 10;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
         }
 
         section {
-            min-height: 100vh;
-            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
-            padding: 6rem 10% 4rem 10%;
+            padding: 0 10%;
+        }
+
+        /* ACode section: grows if the content needs more room, so nothing is ever clipped */
+        section.acode-section {
+            height: auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 4.5rem 10% 1.5rem;
+        }
+
+        /* Footer section: short, snaps to the END so it can always be reached */
+        section.footer-section {
+            height: auto;
+            min-height: 0;
+            justify-content: flex-end;
+            padding: 2rem 10% 0;
+            scroll-snap-align: end;
+            scroll-snap-stop: normal;
+        }
+
+        /* Silky smooth scroll animation states */
+        .fade-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* transform: none (not translateY(0)) so the element isn't left on a blurry GPU layer */
+        .fade-element.visible {
+            opacity: 1;
+            transform: none;
         }
 
         /* Main Container */
@@ -209,24 +263,34 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             width: 100%;
             gap: clamp(2rem, 5vw, 4rem);
         }
 
-        /* Warning Banner / Code Wrap */
+        /* Image frame.
+           Its width is worked out from the screenshot's real aspect ratio (--img-ratio, set by the
+           script below), so the image is as big as the screen allows, without bars, cropping or stretching. */
         .acode-wrap {
+            --pad: clamp(0.45rem, 1.2vw, 0.8rem);
+            --img-h: max(16rem, calc(100vh - 20rem));
             position: relative;
             isolation: isolate;
-            width: 100%;
-            margin: clamp(1.5rem, 4vw, 2.5rem) 0;
-            padding: clamp(0.45rem, 1.2vw, 0.8rem);
+            width: min(100%, calc(var(--img-h) * var(--img-ratio, 1.7778) + var(--pad) * 2 + 2px));
+            margin: clamp(0.6rem, 2vw, 1.2rem) auto;
+            padding: var(--pad);
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 22px;
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025));
             box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), inset 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        @supports (height: 100dvh) {
+            .acode-wrap {
+                --img-h: max(16rem, calc(100dvh - 20rem));
+            }
         }
 
         .acode-wrap::before {
@@ -246,6 +310,7 @@
             width: 100%;
             height: auto;
             border-radius: 15px;
+            image-rendering: auto;
         }
 
         /* Section Blocks */
@@ -257,8 +322,6 @@
         }
 
         #present {
-            width: 100vw;
-            height: 100vh;
             overflow: hidden;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -269,15 +332,15 @@
             width: 100%;
             display: grid;
             place-items: center;
-            padding: 1rem 0;
+            padding: 0.5rem 0;
         }
 
         #acode .fade-element {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             margin-inline: auto;
             text-align: center;
-            padding: clamp(1.5rem, 4vw, 2.75rem);
+            padding: clamp(1rem, 2.4vw, 1.6rem);
             border: 1px solid var(--border);
             border-radius: 28px;
             background: linear-gradient(155deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015));
@@ -285,8 +348,8 @@
         }
 
         #acode h3 {
-            margin: 0 0 1.25rem;
-            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            margin: 0 0 0.6rem;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
             line-height: 1.2;
             letter-spacing: -0.035em;
         }
@@ -294,7 +357,7 @@
         #acode .fade-element>p {
             max-width: 650px;
             margin: 0 auto;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         #acode .fade-element>p strong {
@@ -333,7 +396,9 @@
             letter-spacing: -0.055em;
             background: linear-gradient(100deg, #fff 15%, #bcecff 50%, #d8b8ff 85%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
         }
 
         .present-confetti {
@@ -379,6 +444,7 @@
         .text-gradient-switch {
             background: linear-gradient(90deg, #FCCEFF 0%, #3ECAE3 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -386,6 +452,7 @@
             display: inline-block;
             background: linear-gradient(90deg, #7834D8 0%, #99004F 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0.85;
             transition: transform 0.4s var(--ease), opacity 0.3s ease;
@@ -393,22 +460,19 @@
 
         .text-gradient-bounce:hover {
             opacity: 1;
-            animation: rotateAnim 1s ease-in-out infinite;
         }
 
         /* Footer */
         footer {
             width: 100%;
-            max-width: 950px;
-            margin: 3rem auto 0 auto;
+            max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            padding-bottom: 3vh;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
             font-size: 0.85rem;
-            position: relative;
-            z-index: 10;
         }
 
         .footer-lists {
@@ -422,14 +486,14 @@
         }
 
         .footer-lists li {
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-right {
             text-align: right;
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.5rem;
         }
 
         .footer-right a {
@@ -445,7 +509,7 @@
         /* --- Mobile Responsive Layout --- */
         @media (max-width: 900px) {
             .top-nav {
-                padding: 1.2rem 1.5rem;
+                padding: 1.5rem 2rem;
             }
 
             .nav-links {
@@ -455,12 +519,24 @@
 
             section {
                 padding: 5rem 5% 3rem 5%;
+                height: auto;
                 min-height: 100vh;
+                min-height: 100dvh;
+            }
+
+            section.acode-section {
+                padding: 5rem 5% 2rem 5%;
+            }
+
+            section.footer-section {
+                min-height: 0;
+                padding: 1.5rem 5% 0;
             }
 
             #present {
                 height: auto;
                 min-height: 68vh;
+                min-height: 68dvh;
             }
 
             #acode .fade-element {
@@ -469,6 +545,7 @@
             }
 
             .acode-wrap {
+                width: 100%;
                 border-radius: 16px;
             }
 
@@ -477,23 +554,24 @@
             }
 
             h1 {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
 
             h2 {
-                font-size: 1.35rem;
+                font-size: 1.4rem;
             }
 
             footer {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                gap: 1.2rem;
+                gap: 1.5rem;
+                padding-top: 1.5rem;
             }
 
             .footer-lists {
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 1rem;
             }
 
             .footer-right {
@@ -513,6 +591,10 @@
                 animation: none !important;
                 transition-duration: 0.01ms !important;
             }
+
+            .scroll-container {
+                scroll-behavior: auto;
+            }
         }
     </style>
 </head>
@@ -525,24 +607,26 @@
             <img src="./mariowos-icon.png" alt="mariowOS" class="nav-logo">
         </a>
         <div class="nav-links">
-            <a href="https://github.com/mariowOS/" target="_blank"><img src="./github.webp" alt="GitHub"></a>
-            <a href="https://discord.gg/QxjDUeQGMu" target="_blank"><img src="./discord.webp" alt="Discord"></a>
+            <a href="https://github.com/mariowOS/" target="_blank" rel="noopener noreferrer"><img src="./github.webp"
+                    alt="GitHub"></a>
+            <a href="https://discord.gg/QxjDUeQGMu" target="_blank" rel="noopener noreferrer"><img src="./discord.webp"
+                    alt="Discord"></a>
         </div>
     </header>
 
     <div class="aurora" aria-hidden="true"></div>
     <canvas id="star-canvas"></canvas>
 
-    <!-- Section progress dots ("balls") -->
+    <!-- Section progress dots -->
     <nav class="section-dots" aria-label="Sections"></nav>
 
     <div class="scroll-container">
         <!-- Section 1: Intro -->
         <section>
             <div class="main-container">
-                <div class="download-section">
-                    <h1>Did you know you could <br><span class="text-gradient-switch">develop your apps with</span><span
-                            class="text-gradient-bounce"> mariowOS?</span></h1>
+                <div class="download-section fade-element visible">
+                    <h1>Did you know you could <br><span class="text-gradient-switch">develop your apps with
+                        </span><span class="text-gradient-bounce"> mariowOS?</span></h1>
                     <p style="margin-top: 0.5rem; font-size: 0.78rem;">yep! that's right! and it's easier than you
                         think!</p>
                 </div>
@@ -550,18 +634,18 @@
         </section>
 
         <!-- Section 2: Present -->
-        <section id="present" aria-label="Introducing mariowOS development">
+        <section id="present" aria-label="Introducing ACode">
             <canvas class="present-confetti" aria-hidden="true"></canvas>
             <div class="present-copy">
-                <p>Something exciting is here</p>
-                <h2>We present to you...</h2>
+                <p>for mariowOS devs</p>
+                <h2>meet ACode</h2>
             </div>
-            <span class="present-scroll-hint" aria-hidden="true">Keep scrolling ↓</span>
+            <span class="present-scroll-hint" aria-hidden="true">scroll down ↓</span>
         </section>
 
-        <!-- Section 3: ACode & Footer -->
-        <section style="justify-content: space-between; min-height: 100vh;">
-            <div class="main-container" style="width: 100%; margin-top: 2rem;">
+        <!-- Section 3: ACode -->
+        <section class="acode-section">
+            <div class="main-container" style="width: 100%;">
                 <div id="acode">
                     <div class="fade-element">
                         <h3>ACode, your way of developing</h3>
@@ -573,13 +657,15 @@
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Footer -->
-            <footer>
+        <!-- Section 4: Footer -->
+        <section class="footer-section">
+            <footer class="fade-element">
                 <div>
                     <h2 style="margin: 0; font-size: 1.3rem;">mariowstech</h2>
-                    <p style="margin: 0; font-size: 0.8rem; margin-top: 3px;">Made with
-                        <svg style="width:11px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24">
+                    <p style="margin: 0; font-size: 0.8rem; margin-top: 5px;">Made with
+                        <svg style="width:12px; vertical-align:middle; fill:#ff6b81;" viewBox="0 0 24 24">
                             <path
                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                         </svg> by
@@ -606,107 +692,6 @@
     </div>
 
     <script>
-        // Section progress dots generator & observer
-        const sections = document.querySelectorAll('.scroll-container section');
-        const dotsNav = document.querySelector('.section-dots');
-
-        const dots = Array.from(sections).map((section, i) => {
-            const dot = document.createElement('button');
-            dot.setAttribute('aria-label', `Go to section ${i + 1}`);
-            dot.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth' }));
-            dotsNav.appendChild(dot);
-            return dot;
-        });
-
-        const dotObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const index = Array.from(sections).indexOf(entry.target);
-                    dots.forEach((d, i) => d.classList.toggle('active', i === index));
-                }
-            });
-        }, { threshold: 0.5 });
-
-        sections.forEach(section => dotObserver.observe(section));
-
-        // Confetti script
-        const presentSection = document.getElementById('present');
-        const confettiCanvas = presentSection.querySelector('.present-confetti');
-        const confettiContext = confettiCanvas.getContext('2d');
-        const confettiColors = ['#3ECAE3', '#FCCEFF', '#8DFFAB', '#FFAA8B', '#ffffff', '#7834D8'];
-        let confettiPieces = [];
-        let confettiFrame;
-
-        function resizeConfettiCanvas() {
-            const bounds = presentSection.getBoundingClientRect();
-            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-            confettiCanvas.width = bounds.width * pixelRatio;
-            confettiCanvas.height = bounds.height * pixelRatio;
-            confettiContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        }
-
-        function popConfetti() {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            const bounds = presentSection.getBoundingClientRect();
-            resizeConfettiCanvas();
-            const colors = confettiColors;
-            for (let i = 0; i < 150; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = 3 + Math.random() * 8;
-                confettiPieces.push({
-                    x: bounds.width * (0.2 + Math.random() * 0.6),
-                    y: bounds.height * (0.35 + Math.random() * 0.35),
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 3,
-                    size: 4 + Math.random() * 7,
-                    rotation: Math.random() * Math.PI,
-                    spin: (Math.random() - 0.5) * 0.24,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    life: 1
-                });
-            }
-            if (!confettiFrame) animateConfetti();
-        }
-
-        function animateConfetti() {
-            const bounds = presentSection.getBoundingClientRect();
-            confettiContext.clearRect(0, 0, bounds.width, bounds.height);
-            confettiPieces = confettiPieces.filter(piece => piece.life > 0);
-            confettiPieces.forEach(piece => {
-                piece.x += piece.vx;
-                piece.y += piece.vy;
-                piece.vy += 0.13;
-                piece.vx *= 0.995;
-                piece.rotation += piece.spin;
-                piece.life -= 0.009;
-                confettiContext.save();
-                confettiContext.globalAlpha = Math.min(1, piece.life * 2);
-                confettiContext.translate(piece.x, piece.y);
-                confettiContext.rotate(piece.rotation);
-                confettiContext.fillStyle = piece.color;
-                confettiContext.fillRect(-piece.size / 2, -piece.size / 3, piece.size, piece.size * 0.65);
-                confettiContext.restore();
-            });
-            if (confettiPieces.length) {
-                confettiFrame = requestAnimationFrame(animateConfetti);
-            } else {
-                confettiFrame = null;
-            }
-        }
-
-        resizeConfettiCanvas();
-        window.addEventListener('resize', resizeConfettiCanvas);
-
-        const presentObserver = new IntersectionObserver(entries => {
-            if (entries.some(entry => entry.isIntersecting)) {
-                presentSection.classList.add('is-visible');
-                popConfetti();
-                presentObserver.disconnect();
-            }
-        }, { threshold: 0.45 });
-
-        presentObserver.observe(presentSection);
-
         // Star Canvas
         const canvas = document.getElementById('star-canvas');
         const ctx = canvas.getContext('2d');
@@ -766,6 +751,152 @@
 
         initCanvas();
         animateCanvas();
+
+        // ACode screenshot: feed its real aspect ratio to the CSS so it can be sized exactly
+        const acodeImg = document.querySelector('.ui-image');
+        const acodeWrap = document.querySelector('.acode-wrap');
+
+        function setAcodeRatio() {
+            if (acodeImg.naturalWidth && acodeImg.naturalHeight) {
+                acodeWrap.style.setProperty('--img-ratio', (acodeImg.naturalWidth / acodeImg.naturalHeight).toFixed(4));
+            }
+        }
+
+        if (acodeImg.complete) setAcodeRatio();
+        acodeImg.addEventListener('load', setAcodeRatio);
+
+        // Fade-in on scroll
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.fade-element').forEach(el => fadeObserver.observe(el));
+
+        // Section progress dots
+        const scroller = document.querySelector('.scroll-container');
+        const sections = document.querySelectorAll('.scroll-container section');
+        const dotsNav = document.querySelector('.section-dots');
+        const dots = Array.from(sections).map((section, i) => {
+            const dot = document.createElement('button');
+            dot.setAttribute('aria-label', `Go to section ${i + 1}`);
+            dot.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth' }));
+            dotsNav.appendChild(dot);
+            return dot;
+        });
+
+        // The footer section is short, so the active dot is the section taking up most of the
+        // screen, and the last dot as soon as the page is scrolled to the very bottom.
+        function updateDots() {
+            const box = scroller.getBoundingClientRect();
+            let activeIndex = 0;
+            let bestVisible = -1;
+            sections.forEach((section, i) => {
+                const r = section.getBoundingClientRect();
+                const visible = Math.max(0, Math.min(r.bottom, box.bottom) - Math.max(r.top, box.top));
+                if (visible > bestVisible) {
+                    bestVisible = visible;
+                    activeIndex = i;
+                }
+            });
+            if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2) {
+                activeIndex = sections.length - 1;
+            }
+            dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+        }
+
+        let dotsTicking = false;
+        scroller.addEventListener('scroll', () => {
+            if (dotsTicking) return;
+            dotsTicking = true;
+            requestAnimationFrame(() => {
+                updateDots();
+                dotsTicking = false;
+            });
+        }, { passive: true });
+        window.addEventListener('resize', updateDots);
+        updateDots();
+
+        // Confetti script
+        const presentSection = document.getElementById('present');
+        const confettiCanvas = presentSection.querySelector('.present-confetti');
+        const confettiContext = confettiCanvas.getContext('2d');
+        const confettiColors = ['#3ECAE3', '#FCCEFF', '#8DFFAB', '#FFAA8B', '#ffffff', '#7834D8'];
+        let confettiPieces = [];
+        let confettiFrame;
+
+        function resizeConfettiCanvas() {
+            const bounds = presentSection.getBoundingClientRect();
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            confettiCanvas.width = bounds.width * pixelRatio;
+            confettiCanvas.height = bounds.height * pixelRatio;
+            confettiContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        }
+
+        function popConfetti() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const bounds = presentSection.getBoundingClientRect();
+            resizeConfettiCanvas();
+            const colors = confettiColors;
+            for (let i = 0; i < 150; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 3 + Math.random() * 8;
+                confettiPieces.push({
+                    x: bounds.width * (0.2 + Math.random() * 0.6),
+                    y: bounds.height * (0.35 + Math.random() * 0.35),
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 3,
+                    size: 4 + Math.random() * 7,
+                    rotation: Math.random() * Math.PI,
+                    spin: (Math.random() - 0.5) * 0.24,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 1
+                });
+            }
+            if (!confettiFrame) animateConfetti();
+        }
+
+        function animateConfetti() {
+            const bounds = presentSection.getBoundingClientRect();
+            confettiContext.clearRect(0, 0, bounds.width, bounds.height);
+            confettiPieces = confettiPieces.filter(piece => piece.life > 0);
+            confettiPieces.forEach(piece => {
+                piece.x += piece.vx;
+                piece.y += piece.vy;
+                piece.vy += 0.13;
+                piece.vx *= 0.995;
+                piece.rotation += piece.spin;
+                piece.life -= 0.009;
+
+                confettiContext.save();
+                confettiContext.globalAlpha = Math.min(1, piece.life * 2);
+                confettiContext.translate(piece.x, piece.y);
+                confettiContext.rotate(piece.rotation);
+                confettiContext.fillStyle = piece.color;
+                confettiContext.fillRect(-piece.size / 2, -piece.size / 3, piece.size, piece.size * 0.65);
+                confettiContext.restore();
+            });
+
+            if (confettiPieces.length) {
+                confettiFrame = requestAnimationFrame(animateConfetti);
+            } else {
+                confettiFrame = null;
+            }
+        }
+
+        resizeConfettiCanvas();
+        window.addEventListener('resize', resizeConfettiCanvas);
+
+        const presentObserver = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting)) {
+                presentSection.classList.add('is-visible');
+                popConfetti();
+                presentObserver.disconnect();
+            }
+        }, { threshold: 0.45 });
+
+        presentObserver.observe(presentSection);
     </script>
 </body>
 
