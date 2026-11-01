@@ -611,7 +611,16 @@
             }
         }
 
-        window.addEventListener('resize', initCanvas);
+        let currentWidth = window.innerWidth;
+
+        function resizeStars() {
+            if (currentWidth != window.innerWidth) {
+                initCanvas();
+                currentWidth = window.innerWidth;
+            }
+        }
+
+        window.addEventListener('resize', resizeStars);
 
         class Star {
             constructor() {
